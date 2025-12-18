@@ -15,7 +15,7 @@ import ClientGrid from './components/ClientGrid';
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [mode, setMode] = useState(prefersDarkMode ? 'dark' : 'dark'); // Default to dark as per original design
+  const [mode, setMode] = useState(prefersDarkMode ? 'dark' : 'dark');
   const [genderList, setGenderList] = useState([]);
   const [clients, setClients] = useState([]);
   const [selectedAgeRange, setSelectedAgeRange] = useState(null);
@@ -29,34 +29,33 @@ function App() {
     palette: {
       mode,
       ...(mode === 'dark' ? {
-        // DARK MODE (Original Premium Slate)
+
         primary: {
-          main: '#6366F1', // Indigo 500
+          main: '#6366F1',
           light: '#818CF8',
           dark: '#4F46E5',
         },
         background: {
-          default: '#0F172A', // Slate 900
-          paper: '#1E293B',   // Slate 800
+          default: '#0F172A',
+          paper: '#1E293B',
         },
         text: {
-          primary: '#F1F5F9', // Slate 100
-          secondary: '#94A3B8', // Slate 400
+          primary: '#F1F5F9',
+          secondary: '#94A3B8',
         },
       } : {
-        // LIGHT MODE (Clean SaaS)
         primary: {
-          main: '#4F46E5', // Indigo 600 (Darker for contrast on white)
+          main: '#4F46E5',
           light: '#6366F1',
           dark: '#4338CA',
         },
         background: {
-          default: '#F8FAFC', // Slate 50
-          paper: '#FFFFFF',   // White
+          default: '#F8FAFC',
+          paper: '#FFFFFF',
         },
         text: {
-          primary: '#0F172A', // Slate 900
-          secondary: '#64748B', // Slate 500
+          primary: '#0F172A',
+          secondary: '#64748B',
         },
       }),
     },
@@ -84,10 +83,10 @@ function App() {
             backgroundImage: 'none',
             boxShadow: mode === 'dark'
               ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-              : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)', // Lighter shadow for light mode
+              : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
             border: mode === 'dark'
               ? '1px solid rgba(148, 163, 184, 0.1)'
-              : '1px solid rgba(226, 232, 240, 0.8)', // Slate 200 for light mode
+              : '1px solid rgba(226, 232, 240, 0.8)',
           },
         },
       },
@@ -175,7 +174,7 @@ function App() {
                 <Typography variant="body2" sx={{ color: 'white', fontWeight: 'bold' }}>A</Typography>
               </Box>
               <Typography variant="h6" component="div" sx={{ color: 'text.primary' }}>
-                Aspyr<span style={{ color: theme.palette.primary.main }}>Client</span>
+                Client<span style={{ color: theme.palette.primary.main }}>Dashboard</span>
               </Typography>
             </Box>
 
@@ -186,10 +185,10 @@ function App() {
         </AppBar>
 
         <Container
-          maxWidth={false} // Full width
+          maxWidth={false}
           sx={{
             flexGrow: 1,
-            p: 2, // Consistent 16px padding
+            p: 2,
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column'
@@ -198,14 +197,25 @@ function App() {
           <Box
             sx={{
               display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
               flexGrow: 1,
               height: '100%',
               overflow: 'hidden',
-              gap: 3 // Spacing between sidebar and main content
+              gap: 3
             }}
           >
-            {/* Left Panel: Gender Tree (Fixed Width) */}
-            <Box sx={{ width: { xs: '100%', md: 280 }, flexShrink: 0, height: '100%', overflow: 'hidden' }}>
+            <Box sx={{
+              width: { xs: '100%', md: 280 },
+              height: { xs: 'auto', md: '100%' },
+              flexShrink: 0,
+              overflow: 'auto',
+              maxHeight: { xs: '40%', md: '100%' },
+              borderRight: { xs: 'none', md: `1px solid ${theme.palette.divider}` },
+              borderBottom: { xs: `1px solid ${theme.palette.divider}`, md: 'none' },
+              pr: { md: 2 },
+              pb: { xs: 2, md: 0 },
+              mb: { xs: 2, md: 0 }
+            }}>
               <GenderTree
                 genderList={genderList}
                 selectedGender={selectedGender}
@@ -214,8 +224,13 @@ function App() {
               />
             </Box>
 
-            {/* Right Panel: Client Grid (Takes remaining space) */}
-            <Box sx={{ flexGrow: 1, height: '100%', overflow: 'hidden', minWidth: 0 }}>
+            <Box sx={{
+              flexGrow: 1,
+              height: { xs: 'auto', md: '100%' },
+              overflow: 'hidden',
+              minWidth: 0,
+              flexBasis: { xs: '60%', md: 'auto' }
+            }}>
               <ClientGrid
                 clients={clients}
                 selectedAgeRange={selectedAgeRange}
