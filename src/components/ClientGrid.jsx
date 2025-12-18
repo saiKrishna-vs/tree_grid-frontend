@@ -7,10 +7,8 @@ import { Phone, Badge as BadgeIcon, FilterListOff, GridView, ViewList, Person, C
 
 
 const ClientGrid = ({ clients, selectedAgeRange, selectedGender }) => {
-    // Sorting State
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('firstName');
-    // View Mode State: 'table' or 'card'
     const [viewMode, setViewMode] = useState('table');
 
     const theme = useTheme();
@@ -24,14 +22,12 @@ const ClientGrid = ({ clients, selectedAgeRange, selectedGender }) => {
     const handleViewChange = (event) => {
         setViewMode(event.target.value);
     };
-
-    // Sorting Logic
     const sortedClients = useMemo(() => {
         return [...clients].sort((a, b) => {
             let valueA = a[orderBy];
             let valueB = b[orderBy];
 
-            // Handle combined name sorting if needed
+
             if (orderBy === 'name') {
                 valueA = (a.firstName + a.lastName).toLowerCase();
                 valueB = (b.firstName + b.lastName).toLowerCase();
@@ -86,19 +82,19 @@ const ClientGrid = ({ clients, selectedAgeRange, selectedGender }) => {
         { id: 'age', label: 'Age' },
     ];
 
-    // Card View Renderer
+
     const renderCardView = () => (
         <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2, pt: 0 }}>
             <Box
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: {
-                        xs: '1fr', // 1 column on mobile
-                        md: 'repeat(2, 1fr)', // 2 columns on tablet
-                        lg: 'repeat(3, 1fr)', // 3 columns on desktop (matches reference image)
-                        xl: 'repeat(4, 1fr)'  // 4 columns on large screens
+                        xs: '1fr',
+                        md: 'repeat(2, 1fr)',
+                        lg: 'repeat(3, 1fr)',
+                        xl: 'repeat(4, 1fr)'
                     },
-                    gap: 3 // Consistent gap
+                    gap: 3
                 }}
             >
                 {sortedClients.length > 0 ? (
@@ -111,7 +107,7 @@ const ClientGrid = ({ clients, selectedAgeRange, selectedGender }) => {
                                 borderRadius: 2,
                                 bgcolor: alpha(theme.palette.background.default, 0.5),
                                 transition: 'all 0.2s',
-                                height: '100%', // Ensure equal height
+                                height: '100%',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 '&:hover': {
@@ -164,7 +160,7 @@ const ClientGrid = ({ clients, selectedAgeRange, selectedGender }) => {
         </Box>
     );
 
-    // Table View Renderer
+
     const renderTableView = () => (
         <TableContainer sx={{ flexGrow: 1, overflow: 'auto' }}>
             <Table stickyHeader aria-label="client table">
