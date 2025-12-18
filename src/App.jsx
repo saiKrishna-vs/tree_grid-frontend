@@ -186,43 +186,43 @@ function App() {
         </AppBar>
 
         <Container
-          maxWidth="xl"
+          maxWidth={false} // Full width
           sx={{
             flexGrow: 1,
-            p: { xs: 2, md: 4 },
+            p: 2, // Consistent 16px padding
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column'
           }}
         >
-          <Grid
-            container
-            spacing={3}
+          <Box
             sx={{
+              display: 'flex',
               flexGrow: 1,
               height: '100%',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              gap: 3 // Spacing between sidebar and main content
             }}
           >
-            {/* Left Panel: Gender Tree */}
-            <Grid item xs={12} md={3} sx={{ height: { xs: '40%', md: '100%' }, overflow: 'hidden' }}>
+            {/* Left Panel: Gender Tree (Fixed Width) */}
+            <Box sx={{ width: { xs: '100%', md: 280 }, flexShrink: 0, height: '100%', overflow: 'hidden' }}>
               <GenderTree
                 genderList={genderList}
                 selectedGender={selectedGender}
                 selectedAgeRange={selectedAgeRange}
                 onSelectAgeGroup={handleSelectAgeGroup}
               />
-            </Grid>
+            </Box>
 
-            {/* Right Panel: Client Grid */}
-            <Grid item xs={12} md={9} sx={{ height: { xs: '60%', md: '100%' }, overflow: 'hidden' }}>
+            {/* Right Panel: Client Grid (Takes remaining space) */}
+            <Box sx={{ flexGrow: 1, height: '100%', overflow: 'hidden', minWidth: 0 }}>
               <ClientGrid
                 clients={clients}
                 selectedAgeRange={selectedAgeRange}
                 selectedGender={selectedGender}
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Container>
 
         <ToastContainer position="bottom-right" theme={mode} toastStyle={{ backgroundColor: mode === 'dark' ? '#1E293B' : '#FFFFFF', color: mode === 'dark' ? '#F1F5F9' : '#0F172A' }} />
